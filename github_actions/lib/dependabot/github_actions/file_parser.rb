@@ -71,13 +71,16 @@ module Dependabot
           next if string.start_with?(".", "docker://")
           next unless string.match?(GITHUB_REPO_REFERENCE)
 
+          print "Found file: #{file} action: #{string}\n"
           dep = build_github_dependency(file, string)
           git_checker = Dependabot::GitCommitChecker.new(
             dependency: dep,
             credentials: credentials,
             consider_version_branches_pinned: true
           )
+          print "Git dep is #{dep.version}\n"
           if git_checker.git_repo_reachable?
+            print "Git repo is reachable\n"
             next unless git_checker.pinned?
 
             # If dep does not have an assigned (semver) version, look for a commit that references a semver tag
@@ -85,6 +88,7 @@ module Dependabot
               resolved = git_checker.version_for_pinned_sha
 
               if resolved
+                print "Version is #{dep.name} to #{resolved.to_s}"
                 dep = Dependency.new(
                   name: dep.name,
                   version: resolved.to_s,
@@ -96,6 +100,7 @@ module Dependabot
           end
 
           dependency_set << dep
+          print "Added #{dependency_set} to dependency set\n"
         end
 
         dependency_set
@@ -117,9 +122,13 @@ module Dependabot
       sig { params(file: Dependabot::DependencyFile, string: String, hostname: String).returns(Dependabot::Dependency) }
       def github_dependency(file, string, hostname)
         details = T.must(string.match(GITHUB_REPO_REFERENCE)).named_captures
-        name = "#{details.fetch(OWNER_KEY)}/#{details.fetch(REPO_KEY)}"
+        repo_name = "#{details.fetch(OWNER_KEY)}/#{details.fetch(REPO_KEY)}"
+        name = "#{string}"
         ref = details.fetch(REF_KEY)
+        print "Ref details Found #{name} at #{ref}\n"
         version = version_class.new(ref).to_s if version_class.correct?(ref)
+        print "Version is #{name} to #{version}\n"
+        print "File is #{file.name}\n"
         Dependency.new(
           name: name,
           version: version,
@@ -128,7 +137,7 @@ module Dependabot
             groups: [],
             source: {
               type: "git",
-              url: "https://#{hostname}/#{name}".downcase,
+              url: "https://#{hostname}/#{repo_name}".downcase,
               ref: ref,
               branch: nil
             },

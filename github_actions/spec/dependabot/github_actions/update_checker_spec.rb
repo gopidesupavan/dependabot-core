@@ -41,12 +41,12 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
       name: dependency_name,
       version: dependency_version,
       requirements: [{
-        requirement: nil,
-        groups: [],
-        file: ".github/workflows/workflow.yml",
-        source: dependency_source,
-        metadata: { declaration_string: "#{dependency_name}@master" }
-      }],
+                       requirement: nil,
+                       groups: [],
+                       file: ".github/workflows/workflow.yml",
+                       source: dependency_source,
+                       metadata: { declaration_string: "#{dependency_name}@master" }
+                     }],
       package_manager: "github_actions"
     )
   end
@@ -87,28 +87,28 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         version: nil,
         package_manager: "github_actions",
         requirements: [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@v2.1.0" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "v2.1.0",
-            branch: nil
-          }
-        }, {
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@master" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "master",
-            branch: nil
-          }
-        }]
+                         requirement: nil,
+                         groups: [],
+                         file: ".github/workflows/workflow.yml",
+                         metadata: { declaration_string: "actions/checkout@v2.1.0" },
+                         source: {
+                           type: "git",
+                           url: "https://github.com/actions/checkout",
+                           ref: "v2.1.0",
+                           branch: nil
+                         }
+                       }, {
+                         requirement: nil,
+                         groups: [],
+                         file: ".github/workflows/workflow.yml",
+                         metadata: { declaration_string: "actions/checkout@master" },
+                         source: {
+                           type: "git",
+                           url: "https://github.com/actions/checkout",
+                           ref: "master",
+                           branch: nil
+                         }
+                       }]
       )
     end
   end
@@ -202,28 +202,28 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
             name: dependency_name,
             version: "1",
             requirements: [{
-              requirement: nil,
-              groups: [],
-              file: ".github/workflows/workflow.yml",
-              source: {
-                type: "git",
-                url: "https://github.com/actions/create-release",
-                ref: "latest",
-                branch: nil
-              },
-              metadata: { declaration_string: "actions/create-release@latest" }
-            }, {
-              requirement: nil,
-              groups: [],
-              file: ".github/workflows/workflow.yml",
-              source: {
-                type: "git",
-                url: "https://github.com/actions/create-release",
-                ref: "v1",
-                branch: nil
-              },
-              metadata: { declaration_string: "actions/create-release@v1" }
-            }],
+                             requirement: nil,
+                             groups: [],
+                             file: ".github/workflows/workflow.yml",
+                             source: {
+                               type: "git",
+                               url: "https://github.com/actions/create-release",
+                               ref: "latest",
+                               branch: nil
+                             },
+                             metadata: { declaration_string: "actions/create-release@latest" }
+                           }, {
+                             requirement: nil,
+                             groups: [],
+                             file: ".github/workflows/workflow.yml",
+                             source: {
+                               type: "git",
+                               url: "https://github.com/actions/create-release",
+                               ref: "v1",
+                               branch: nil
+                             },
+                             metadata: { declaration_string: "actions/create-release@v1" }
+                           }],
             package_manager: "github_actions"
           )
         end
@@ -486,15 +486,15 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         allow(Dir).to receive(:chdir).and_yield
 
         allow(Open3).to receive(:capture2e)
-          .with(anything, %r{git clone --no-recurse-submodules https://github\.com/actions/setup-node}, anything)
-          .and_return(["", exit_status])
+                          .with(anything, %r{git clone --no-recurse-submodules https://github\.com/actions/setup-node}, anything)
+                          .and_return(["", exit_status])
       end
 
       context "when it's in the current (default) branch" do
         before do
           allow(Open3).to receive(:capture2e)
-            .with(anything, "git branch --remotes --contains #{reference}", anything)
-            .and_return(["  origin/HEAD -> origin/master\n  origin/master", exit_status])
+                            .with(anything, "git branch --remotes --contains #{reference}", anything)
+                            .and_return(["  origin/HEAD -> origin/master\n  origin/master", exit_status])
         end
 
         it "can update to the latest version" do
@@ -507,8 +507,8 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
 
         before do
           allow(Open3).to receive(:capture2e)
-            .with(anything, "git branch --remotes --contains #{reference}", anything)
-            .and_return(["  origin/releases/v1\n", exit_status])
+                            .with(anything, "git branch --remotes --contains #{reference}", anything)
+                            .and_return(["  origin/releases/v1\n", exit_status])
         end
 
         it "can update to the latest version" do
@@ -519,8 +519,8 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
       context "when multiple branches include it and the current (default) branch among them" do
         before do
           allow(Open3).to receive(:capture2e)
-            .with(anything, "git branch --remotes --contains #{reference}", anything)
-            .and_return(["  origin/HEAD -> origin/master\n  origin/master\n  origin/v1.1\n", exit_status])
+                            .with(anything, "git branch --remotes --contains #{reference}", anything)
+                            .and_return(["  origin/HEAD -> origin/master\n  origin/master\n  origin/v1.1\n", exit_status])
         end
 
         it "can update to the latest version" do
@@ -531,8 +531,8 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
       context "when multiple branches include it and the current (default) branch NOT among them" do
         before do
           allow(Open3).to receive(:capture2e)
-            .with(anything, "git branch --remotes --contains #{reference}", anything)
-            .and_return(["  origin/3.3-stable\n  origin/production\n", exit_status])
+                            .with(anything, "git branch --remotes --contains #{reference}", anything)
+                            .and_return(["  origin/3.3-stable\n  origin/production\n", exit_status])
         end
 
         it "raises an error" do
@@ -609,7 +609,7 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
     before do
       allow(checker)
         .to receive(:lowest_security_fix_version)
-        .and_return(Dependabot::GithubActions::Version.new("2.0.0"))
+              .and_return(Dependabot::GithubActions::Version.new("2.0.0"))
     end
 
     it { is_expected.to eq(Dependabot::GithubActions::Version.new("2.0.0")) }
@@ -631,17 +631,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
       context "when the specified reference is not in the latest release" do
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: tip_of_master,
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: tip_of_master,
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -658,17 +658,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
 
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: tip_of_v10,
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: tip_of_v10,
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -679,17 +679,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
 
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: tip_of_v10,
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: tip_of_v10,
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -699,17 +699,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
           let(:tip_of_v7) { "caea17de9196f8bd343efb496b1820e7438d1f83" }
           let(:expected_requirements) do
             [{
-              requirement: nil,
-              groups: [],
-              file: ".github/workflows/workflow.yml",
-              source: {
-                type: "git",
-                url: "https://github.com/actions/setup-node",
-                ref: tip_of_v7,
-                branch: nil
-              },
-              metadata: { declaration_string: "actions/setup-node@master" }
-            }]
+               requirement: nil,
+               groups: [],
+               file: ".github/workflows/workflow.yml",
+               source: {
+                 type: "git",
+                 url: "https://github.com/actions/setup-node",
+                 ref: tip_of_v7,
+                 branch: nil
+               },
+               metadata: { declaration_string: "actions/setup-node@master" }
+             }]
           end
 
           it { is_expected.to eq(expected_requirements) }
@@ -719,17 +719,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
           let(:reference) { "5273d0df" }
           let(:expected_requirements) do
             [{
-              requirement: nil,
-              groups: [],
-              file: ".github/workflows/workflow.yml",
-              source: {
-                type: "git",
-                url: "https://github.com/actions/setup-node",
-                ref: "5273d0df",
-                branch: nil
-              },
-              metadata: { declaration_string: "actions/setup-node@master" }
-            }]
+               requirement: nil,
+               groups: [],
+               file: ".github/workflows/workflow.yml",
+               source: {
+                 type: "git",
+                 url: "https://github.com/actions/setup-node",
+                 ref: "5273d0df",
+                 branch: nil
+               },
+               metadata: { declaration_string: "actions/setup-node@master" }
+             }]
           end
 
           it { is_expected.to eq(expected_requirements) }
@@ -741,17 +741,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
       let(:reference) { "v1.0.1" }
       let(:expected_requirements) do
         [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          source: {
-            type: "git",
-            url: "https://github.com/actions/setup-node",
-            ref: "v1.1.0",
-            branch: nil
-          },
-          metadata: { declaration_string: "actions/setup-node@master" }
-        }]
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           source: {
+             type: "git",
+             url: "https://github.com/actions/setup-node",
+             ref: "v1.1.0",
+             branch: nil
+           },
+           metadata: { declaration_string: "actions/setup-node@master" }
+         }]
       end
 
       it { is_expected.to eq(expected_requirements) }
@@ -760,17 +760,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         let(:ignored_versions) { [">= 1.1.0"] }
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: "v1.0.4",
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: "v1.0.4",
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -794,17 +794,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
 
       let(:expected_requirements) do
         [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          source: {
-            type: "git",
-            url: "https://github.com/#{dependency_name}",
-            ref: "v1",
-            branch: nil
-          },
-          metadata: { declaration_string: "#{dependency_name}@master" }
-        }]
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           source: {
+             type: "git",
+             url: "https://github.com/#{dependency_name}",
+             ref: "v1",
+             branch: nil
+           },
+           metadata: { declaration_string: "#{dependency_name}@master" }
+         }]
       end
 
       it { is_expected.to eq(expected_requirements) }
@@ -879,17 +879,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         let(:reference) { "v1" }
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: "v2",
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: "v2",
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -899,17 +899,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         let(:reference) { "v1.0" }
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: "v2.1",
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: "v2.1",
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -919,17 +919,17 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
         let(:reference) { "v1.0.0" }
         let(:expected_requirements) do
           [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            source: {
-              type: "git",
-              url: "https://github.com/actions/setup-node",
-              ref: "v2.1.3",
-              branch: nil
-            },
-            metadata: { declaration_string: "actions/setup-node@master" }
-          }]
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/setup-node",
+               ref: "v2.1.3",
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/setup-node@master" }
+           }]
         end
 
         it { is_expected.to eq(expected_requirements) }
@@ -941,28 +941,28 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
 
       let(:expected_requirements) do
         [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@v2.1.0" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "v3.5.2",
-            branch: nil
-          }
-        }, {
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@master" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "master",
-            branch: nil
-          }
-        }]
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           metadata: { declaration_string: "actions/checkout@v2.1.0" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "v3.5.2",
+             branch: nil
+           }
+         }, {
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           metadata: { declaration_string: "actions/checkout@master" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "master",
+             branch: nil
+           }
+         }]
       end
 
       it "returns the expected value" do
@@ -980,55 +980,55 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
           version: "2",
           package_manager: "github_actions",
           requirements: [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/bump-datadog-ci.yml",
-            metadata: { declaration_string: "actions/checkout@v3" },
-            source: {
-              type: "git",
-              url: "https://github.com/actions/checkout",
-              ref: "v3",
-              branch: nil
-            }
-          }, {
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/check-license.yml",
-            metadata: { declaration_string: "actions/checkout@v2" },
-            source: {
-              type: "git",
-              url: "https://github.com/actions/checkout",
-              ref: "v2",
-              branch: nil
-            }
-          }]
+                           requirement: nil,
+                           groups: [],
+                           file: ".github/workflows/bump-datadog-ci.yml",
+                           metadata: { declaration_string: "actions/checkout@v3" },
+                           source: {
+                             type: "git",
+                             url: "https://github.com/actions/checkout",
+                             ref: "v3",
+                             branch: nil
+                           }
+                         }, {
+                           requirement: nil,
+                           groups: [],
+                           file: ".github/workflows/check-license.yml",
+                           metadata: { declaration_string: "actions/checkout@v2" },
+                           source: {
+                             type: "git",
+                             url: "https://github.com/actions/checkout",
+                             ref: "v2",
+                             branch: nil
+                           }
+                         }]
         )
       end
 
       let(:expected_requirements) do
         [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/bump-datadog-ci.yml",
-          metadata: { declaration_string: "actions/checkout@v3" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "v3",
-            branch: nil
-          }
-        }, {
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/check-license.yml",
-          metadata: { declaration_string: "actions/checkout@v2" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "v3",
-            branch: nil
-          }
-        }]
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/bump-datadog-ci.yml",
+           metadata: { declaration_string: "actions/checkout@v3" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "v3",
+             branch: nil
+           }
+         }, {
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/check-license.yml",
+           metadata: { declaration_string: "actions/checkout@v2" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "v3",
+             branch: nil
+           }
+         }]
       end
 
       it "updates all source refs to the target ref" do
@@ -1046,55 +1046,55 @@ RSpec.describe Dependabot::GithubActions::UpdateChecker do
           version: nil,
           package_manager: "github_actions",
           requirements: [{
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            metadata: { declaration_string: "actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab" },
-            source: {
-              type: "git",
-              url: "https://github.com/actions/checkout",
-              ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
-              branch: nil
-            }
-          }, {
-            requirement: nil,
-            groups: [],
-            file: ".github/workflows/workflow.yml",
-            metadata: { declaration_string: "actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3" },
-            source: {
-              type: "git",
-              url: "https://github.com/actions/checkout",
-              ref: "8f4b7f84864484a7bf31766abe9204da3cbe65b3",
-              branch: nil
-            }
-          }]
+                           requirement: nil,
+                           groups: [],
+                           file: ".github/workflows/workflow.yml",
+                           metadata: { declaration_string: "actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab" },
+                           source: {
+                             type: "git",
+                             url: "https://github.com/actions/checkout",
+                             ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
+                             branch: nil
+                           }
+                         }, {
+                           requirement: nil,
+                           groups: [],
+                           file: ".github/workflows/workflow.yml",
+                           metadata: { declaration_string: "actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3" },
+                           source: {
+                             type: "git",
+                             url: "https://github.com/actions/checkout",
+                             ref: "8f4b7f84864484a7bf31766abe9204da3cbe65b3",
+                             branch: nil
+                           }
+                         }]
         )
       end
 
       let(:expected_requirements) do
         [{
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
-            branch: nil
-          }
-        }, {
-          requirement: nil,
-          groups: [],
-          file: ".github/workflows/workflow.yml",
-          metadata: { declaration_string: "actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3" },
-          source: {
-            type: "git",
-            url: "https://github.com/actions/checkout",
-            ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
-            branch: nil
-          }
-        }]
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           metadata: { declaration_string: "actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
+             branch: nil
+           }
+         }, {
+           requirement: nil,
+           groups: [],
+           file: ".github/workflows/workflow.yml",
+           metadata: { declaration_string: "actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3" },
+           source: {
+             type: "git",
+             url: "https://github.com/actions/checkout",
+             ref: "8e5e7e5ab8b370d6c329ec480221332ada57f0ab",
+             branch: nil
+           }
+         }]
       end
 
       it "updates all source refs to the target ref" do

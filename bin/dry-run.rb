@@ -624,6 +624,7 @@ dependencies.each do |dep|
   checker_count += 1
   checker = update_checker_for(dep)
   name_version = "\n=== #{dep.name} (#{dep.version})"
+  print "name_version #{name_version}"
   vulnerable = checker.vulnerable? ? " (vulnerable 🚨)" : ""
   puts name_version + vulnerable
 

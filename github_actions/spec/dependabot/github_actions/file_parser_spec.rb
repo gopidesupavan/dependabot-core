@@ -85,7 +85,7 @@ RSpec.describe Dependabot::GithubActions::FileParser do
         mock_service_pack_request("actions/aws")
       end
 
-      its(:length) { is_expected.to eq(2) }
+      its(:length) { is_expected.to eq(1) }
 
       describe "the last dependency" do
         subject(:dependency) { dependencies.last }
@@ -98,7 +98,7 @@ RSpec.describe Dependabot::GithubActions::FileParser do
             source: {
               type: "git",
               url: "https://github.com/actions/aws",
-              ref: "v1.0.0",
+              ref: "vt1.0.0",
               branch: nil
             },
             metadata: { declaration_string: "actions/aws/ec2@v1.0.0" }
@@ -114,6 +114,42 @@ RSpec.describe Dependabot::GithubActions::FileParser do
             },
             metadata: { declaration_string: "actions/aws@v1.0.0" }
           }]
+        end
+
+        it "has the right details" do
+          expect(dependency).to be_a(Dependabot::Dependency)
+          expect(dependency.name).to eq("actions/aws")
+          expect(dependency.version).to eq("1.0.0")
+          expect(dependency.requirements).to eq(expected_requirements)
+        end
+      end
+    end
+
+    context "with a subsection" do
+      let(:workflow_file_fixture_name) { "workflow_subsection.yml" }
+
+      before do
+        mock_service_pack_request("gopidesupavan/monorepo-actions/")
+      end
+
+      its(:length) { is_expected.to eq(1) }
+
+      describe "the sub section dependency" do
+        subject(:dependency) { dependencies.last }
+
+        let(:expected_requirements) do
+          [{
+             requirement: nil,
+             groups: [],
+             file: ".github/workflows/workflow.yml",
+             source: {
+               type: "git",
+               url: "https://github.com/actions/aws",
+               ref: "init/v1.0.0",
+               branch: nil
+             },
+             metadata: { declaration_string: "actions/aws/ec2@v1.0.0" }
+           }]
         end
 
         it "has the right details" do

@@ -61,9 +61,9 @@ module Dependabot
 
           # Maintain a short git hash only if it matches the latest
           if req[:type] == "git" &&
-             git_commit_checker.ref_looks_like_commit_sha?(updated) &&
-             git_commit_checker.ref_looks_like_commit_sha?(current) &&
-             updated.start_with?(current)
+            git_commit_checker.ref_looks_like_commit_sha?(updated) &&
+            git_commit_checker.ref_looks_like_commit_sha?(current) &&
+            updated.start_with?(current)
             next req
           end
 
@@ -230,7 +230,7 @@ module Dependabot
         return unless git_dependency?
 
         if vulnerable? &&
-           (new_tag = lowest_security_fix_version_tag)
+          (new_tag = lowest_security_fix_version_tag)
           return new_tag.fetch(:tag)
         end
 
@@ -238,13 +238,13 @@ module Dependabot
 
         # Return the git tag if updating a pinned version
         if source_git_commit_checker.pinned_ref_looks_like_version? &&
-           (new_tag = latest_version_tag)
+          (new_tag = latest_version_tag)
           return new_tag.fetch(:tag)
         end
 
         # Return the pinned git commit if one is available
         if source_git_commit_checker.pinned_ref_looks_like_commit_sha? &&
-           (new_commit_sha = latest_commit_sha)
+          (new_commit_sha = latest_commit_sha)
           return new_commit_sha
         end
 

@@ -24,9 +24,9 @@ module Dependabot
 
       sig { params(version: VersionParameter).returns(VersionParameter) }
       def self.remove_leading_v(version)
-        return version unless version.to_s.match?(/\Av([0-9])/)
+        return version unless version.to_s.match?(/\A(?:.*\/)?v([0-9])/)
 
-        version.to_s.delete_prefix("v")
+        version.to_s.sub(/\A(?:.*\/)?v/, "")
       end
 
       sig { override.params(version: VersionParameter).returns(T::Boolean) }

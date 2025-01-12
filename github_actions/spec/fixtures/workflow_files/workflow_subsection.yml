@@ -1,0 +1,11 @@
+on: [push]
+
+name: Integration
+jobs:
+  chore:
+    name: Testing chores
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Use init
+      uses: gopidesupavan/monorepo-actions/init@init/v2.0.0

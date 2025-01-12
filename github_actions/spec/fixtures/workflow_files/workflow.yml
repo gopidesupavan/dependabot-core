@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1.0.0
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
@@ -39,6 +39,8 @@ jobs:
     - name: Check for unmet constraints
       run: |
         node ./scripts/run-yarn.js constraints
+    - name: Use init
+      uses: gopidesupavan/monorepo-actions/init@init/v2.0.0
   acceptance:
     strategy:
       fail-fast: false
@@ -85,6 +87,9 @@ jobs:
     - name: Run the unit tests
       run: |
         node ./scripts/run-yarn.js test:unit
+
+    - name: Use init
+      uses: gopidesupavan/monorepo-actions/init@init/v2.0.0
 
   set-up-node-with-double-quotes:
     name: "Set up node with double quotes"

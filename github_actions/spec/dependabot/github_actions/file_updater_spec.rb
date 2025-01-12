@@ -526,4 +526,59 @@ RSpec.describe Dependabot::GithubActions::FileUpdater do
       end
     end
   end
+
+  describe "#subsection_dep" do
+    subject(:updated_files) { updater.updated_dependency_files }
+
+    it "returns DependencyFile objects" do
+      updated_files.each { |f| expect(f).to be_a(Dependabot::DependencyFile) }
+    end
+
+    its(:length) { is_expected.to eq(1) }
+
+    describe "the updated workflow file" do
+      subject(:updated_workflow_file) do
+        updated_files.find { |f| f.name == ".github/workflows/workflow.yml" }
+      end
+
+      context "with a path" do
+        let(:workflow_file_body) do
+          fixture("workflow_files", "workflow_subsection.yml")
+        end
+        let(:dependency) do
+          Dependabot::Dependency.new(
+            name: "gopidesupavan/monorepo-actions",
+            version: "5273d0df9c603edc4284ac8402cf650b4f1f6686",
+            previous_version: nil,
+            requirements: [{
+                             requirement: nil,
+                             groups: [],
+                             file: ".github/workflows/workflow.yml",
+                             source: {
+                               type: "git",
+                               url: "https://github.com/gopidesupavan/monorepo-actions",
+                               ref: "init/v3.0.0",
+                               branch: nil
+                             },
+                             metadata: { declaration_string: "gopidesupavan/monorepo-actions/init@init/v3.0.0" }
+                           }],
+            previous_requirements: [{
+                                      requirement: nil,
+                                      groups: [],
+                                      file: ".github/workflows/workflow.yml",
+                                      source: {
+                                        type: "git",
+                                        url: "https://github.com/gopidesupavan/monorepo-actions",
+                                        ref: "init/v2.0.0",
+                                        branch: nil
+                                      },
+                                      metadata: { declaration_string: "gopidesupavan/monorepo-actions/init@init/v2.0.0" }
+                                    }],
+            package_manager: "github_actions"
+          )
+        end
+        its(:content) { is_expected.to include "gopidesupavan/monorepo-actions/init@init/v3.0.0" }
+      end
+      end
+  end
 end
